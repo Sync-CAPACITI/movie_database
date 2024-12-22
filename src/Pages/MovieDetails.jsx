@@ -1,4 +1,3 @@
-// MovieDetails.js
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -18,26 +17,55 @@ const MovieDetails = () => {
     setMovieDetails(data);
   };
 
-  if (!movieDetails) return <div>Loading...</div>;
+  if (!movieDetails) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-lg font-medium text-gray-600">Loading...</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="movie-details">
-      <h2>{movieDetails.Title}</h2>
-      <p>{movieDetails.Plot}</p>
-      <img src={movieDetails.Poster} alt={movieDetails.Title} />
-      <div>
-        <strong>Released:</strong> {movieDetails.Released}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden">
+        {/* Hero Section */}
+        <div className="relative">
+          <img
+            src={movieDetails.Poster}
+            alt={movieDetails.Title}
+            className="w-full h-96 object-cover"
+          />
+        </div>
+
+        {/* Movie Details */}
+        <div className="p-6">
+          {/* Title */}
+          <h2 className="text-3xl font-bold text-gray-800">{movieDetails.Title}</h2>
+
+          {/* Plot */}
+          <p className="mt-4 text-gray-700">{movieDetails.Plot}</p>
+
+          {/* Additional Details */}
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <strong className="block text-gray-600">Released:</strong>
+              <span className="text-gray-800">{movieDetails.Released}</span>
+            </div>
+            <div>
+              <strong className="block text-gray-600">Director:</strong>
+              <span className="text-gray-800">{movieDetails.Director}</span>
+            </div>
+            <div>
+              <strong className="block text-gray-600">Actors:</strong>
+              <span className="text-gray-800">{movieDetails.Actors}</span>
+            </div>
+            <div>
+              <strong className="block text-gray-600">IMDB Rating:</strong>
+              <span className="text-gray-800">{movieDetails.imdbRating}/10</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div>
-        <strong>Director:</strong> {movieDetails.Director}
-      </div>
-      <div>
-        <strong>Actors:</strong> {movieDetails.Actors}
-      </div>
-      <div>
-        <strong>IMDB Rating:</strong> {movieDetails.imdbRating}
-      </div>
-      {/* You can add more details here */}
     </div>
   );
 };
