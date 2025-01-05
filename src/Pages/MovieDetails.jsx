@@ -35,6 +35,9 @@ const MovieDetails = () => {
 
   const actors = movieDetails.Actors.split(', ');
 
+  // Assume that the trailer is available via a YouTube URL or Trailer ID
+  const trailerId = movieDetails.Trailer ? movieDetails.Trailer.split('/').pop() : "dQw4w9WgXcQ"; // Default to a popular YouTube video if not found
+
   return (
     <div className="min-h-screen bg-[#06130e] text-white flex flex-col items-center justify-center p-4">
       <div className="max-w-4xl w-full bg-white text-black shadow-lg rounded-lg overflow-hidden">
@@ -78,10 +81,25 @@ const MovieDetails = () => {
               <div className="flex flex-wrap gap-6 mt-4">
                 {actors.map((actor, index) => (
                   <div key={index} className="actor-card">
-
                     <div className="actor-name text-center">{actor}</div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* YouTube Trailer Section */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
+              <div className="trailer-container">
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${trailerId}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
           </div>
