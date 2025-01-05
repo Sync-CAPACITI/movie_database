@@ -9,6 +9,7 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [category, setCategory] = useState("random");
   const [activeCategory, setActiveCategory] = useState("random");
+  const [activeGenre, setActiveGenre] = useState(null); // Track active genre
 
   useEffect(() => {
     if (category === "random") {
@@ -20,9 +21,10 @@ const Home = () => {
     } else if (category === "trending") {
       fetchTrendingMovies();
     } else {
-      fetchMoviesByGenre(category); // Fetch movies for the selected genre
+      // Fetch movies based on selected genre and active category
+      fetchMoviesByGenre(category, activeGenre);
     }
-  }, [category]);
+  }, [category, activeGenre]);
 
   const fetchRandomMovies = async () => {
     const movieList = [];
@@ -40,7 +42,7 @@ const Home = () => {
     setMovies(shuffledMovies);
   };
 
-  const fetchMoviesByGenre = async (genre) => {
+  const fetchMoviesByGenre = async (category, genre) => {
     const response = await fetch(`${API_URL}&s=${genre}`);
     const data = await response.json();
     setMovies(data.Search || []);
@@ -79,10 +81,16 @@ const Home = () => {
     setMovies(data.Search || []);
   };
 
-  // Set category and active state
+  // Set category and active genre
   const handleCategoryClick = (category) => {
     setCategory(category);
-    setActiveCategory(category); // Set the active category state
+    setActiveCategory(category);
+    setActiveGenre(null); // Reset the genre when category changes
+  };
+
+  const handleGenreClick = (genre) => {
+    setActiveGenre(genre); // Set the active genre
+    fetchMoviesByGenre(category, genre); // Fetch movies based on selected genre
   };
 
   return (
@@ -129,38 +137,41 @@ const Home = () => {
         </button>
       </div>
 
-      <div className="genre-buttons">
-        <button
-          onClick={() => handleCategoryClick("action")}
-          className={activeCategory === "action" ? "active" : ""}
-        >
-          Action
-        </button>
-        <button
-          onClick={() => handleCategoryClick("comedy")}
-          className={activeCategory === "comedy" ? "active" : ""}
-        >
-          Comedy
-        </button>
-        <button
-          onClick={() => handleCategoryClick("drama")}
-          className={activeCategory === "drama" ? "active" : ""}
-        >
-          Drama
-        </button>
-        <button
-          onClick={() => handleCategoryClick("thriller")}
-          className={activeCategory === "thriller" ? "active" : ""}
-        >
-          Thriller
-        </button>
-        <button
-          onClick={() => handleCategoryClick("romance")}
-          className={activeCategory === "romance" ? "active" : ""}
-        >
-          Romance
-        </button>
-      </div>
+      {/* Genre Buttons: Show these only if category is active */}
+      {(activeCategory === "trending" || activeCategory === "random") && (
+        <div className="genre-buttons">
+          <button
+            onClick={() => handleGenreClick("action")}
+            className={activeGenre === "action" ? "active" : ""}
+          >
+            Action
+          </button>
+          <button
+            onClick={() => handleGenreClick("comedy")}
+            className={activeGenre === "comedy" ? "active" : ""}
+          >
+            Comedy
+          </button>
+          <button
+            onClick={() => handleGenreClick("drama")}
+            className={activeGenre === "drama" ? "active" : ""}
+          >
+            Drama
+          </button>
+          <button
+            onClick={() => handleGenreClick("thriller")}
+            className={activeGenre === "thriller" ? "active" : ""}
+          >
+            Thriller
+          </button>
+          <button
+            onClick={() => handleGenreClick("romance")}
+            className={activeGenre === "romance" ? "active" : ""}
+          >
+            Romance
+          </button>
+        </div>
+      )}
 
       {movies?.length > 0 ? (
         <div className="container">
