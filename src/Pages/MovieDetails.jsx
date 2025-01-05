@@ -81,6 +81,11 @@ const MovieDetails = () => {
               <div className="flex flex-wrap gap-6 mt-4">
                 {actors.map((actor, index) => (
                   <div key={index} className="actor-card">
+                    <img
+                      src={actorImages[actor] || "https://via.placeholder.com/150"} // Use the placeholder if no image
+                      alt={actor}
+                      className="actor-image"
+                    />
                     <div className="actor-name text-center">{actor}</div>
                   </div>
                 ))}
@@ -88,19 +93,17 @@ const MovieDetails = () => {
             </div>
 
             {/* YouTube Trailer Section */}
-            <div className="mt-8">
+            <div className="trailer-container mt-8">
               <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
-              <div className="trailer-container">
-                <iframe
-                  width="100%"
-                  height="315"
-                  src={`https://www.youtube.com/embed/${trailerId}`}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
+              <iframe
+                width="100%"
+                height="315"
+                src={`https://www.youtube.com/embed/${trailerId}`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             </div>
           </div>
         </div>
