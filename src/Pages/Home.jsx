@@ -10,6 +10,8 @@ const Home = () => {
   const [category, setCategory] = useState("random");
   const [activeCategory, setActiveCategory] = useState("random");
   const [activeGenre, setActiveGenre] = useState(null); // Track active genre
+  const [currentPage, setCurrentPage] = useState(1); // Track current page for pagination
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (category === "random") {
@@ -24,46 +26,56 @@ const Home = () => {
       // Fetch movies based on selected genre and active category
       fetchMoviesByGenre(category, activeGenre);
     }
-  }, [category, activeGenre]);
+  }, [category, activeGenre, currentPage]);
 
   const fetchRandomMovies = async () => {
+    setLoading(true);
     const movieList = [];
     const categories = ["action", "comedy", "drama", "thriller", "romance"];
 
     for (let category of categories) {
-      const response = await fetch(`${API_URL}&s=${category}`);
+      const response = await fetch(`${API_URL}&s=${category}&page=${currentPage}`);
       const data = await response.json();
       if (data.Search) {
         movieList.push(...data.Search);
       }
     }
 
-    const shuffledMovies = shuffleArray(movieList).slice(0, 12);
+    const shuffledMovies = shuffleArray(movieList).slice(0, 12 * currentPage);
     setMovies(shuffledMovies);
+    setLoading(false);
   };
 
   const fetchMoviesByGenre = async (category, genre) => {
-    const response = await fetch(`${API_URL}&s=${genre}`);
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=${genre}&page=${currentPage}`);
     const data = await response.json();
     setMovies(data.Search || []);
+    setLoading(false);
   };
 
   const fetchLatestMovies = async () => {
-    const response = await fetch(`${API_URL}&s=movie&y=2024`);
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=movie&y=2024&page=${currentPage}`);
     const data = await response.json();
     setMovies(data.Search || []);
+    setLoading(false);
   };
 
   const fetchLatestTVSeries = async () => {
-    const response = await fetch(`${API_URL}&s=tv&y=2024`);
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=tv&y=2024&page=${currentPage}`);
     const data = await response.json();
     setMovies(data.Search || []);
+    setLoading(false);
   };
 
   const fetchTrendingMovies = async () => {
-    const response = await fetch(`${API_URL}&s=movie&sort=year`);
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=movie&sort=year&page=${currentPage}`);
     const data = await response.json();
     setMovies(data.Search || []);
+    setLoading(false);
   };
 
   const shuffleArray = (array) => {
@@ -76,9 +88,11 @@ const Home = () => {
   };
 
   const searchMovies = async (title) => {
-    const response = await fetch(`${API_URL}&s=${title}`);
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=${title}&page=${currentPage}`);
     const data = await response.json();
     setMovies(data.Search || []);
+    setLoading(false);
   };
 
   // Set category and active genre
@@ -86,11 +100,17 @@ const Home = () => {
     setCategory(category);
     setActiveCategory(category);
     setActiveGenre(null); // Reset the genre when category changes
+    setCurrentPage(1); // Reset to the first page
   };
 
   const handleGenreClick = (genre) => {
     setActiveGenre(genre); // Set the active genre
     fetchMoviesByGenre(category, genre); // Fetch movies based on selected genre
+    setCurrentPage(1); // Reset to the first page
+  };
+
+  const handleShowMore = () => {
+    setCurrentPage((prevPage) => prevPage + 1); // Increment page number
   };
 
   return (
@@ -184,6 +204,17 @@ const Home = () => {
           <h2>No movies found</h2>
         </div>
       )}
+
+      {/* Floating Show More Button */}
+      <div className="show-more-btn">
+        <button
+          onClick={handleShowMore}
+          disabled={loading}
+          className={loading ? "loading" : ""}
+        >
+          {loading ? "Loading..." : "Show More"}
+        </button>
+      </div>
     </div>
   );
 };

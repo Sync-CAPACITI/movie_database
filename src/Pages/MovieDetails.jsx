@@ -7,15 +7,30 @@ const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
 const MovieDetails = () => {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const [moreMovies, setMoreMovies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchMovieDetails(id);
   }, [id]);
 
   const fetchMovieDetails = async (id) => {
+    setLoading(true);
     const response = await fetch(`${API_URL}&i=${id}`);
     const data = await response.json();
     setMovieDetails(data);
+    setLoading(false);
+  };
+
+  // Fetch additional movies (dummy example fetching more movies)
+  const fetchMoreMovies = async () => {
+    setLoading(true);
+    const response = await fetch(`${API_URL}&s=movie&page=${page + 1}`);
+    const data = await response.json();
+    setMoreMovies((prevMovies) => [...prevMovies, ...data.Search]);
+    setPage(page + 1);
+    setLoading(false);
   };
 
   if (!movieDetails) {
