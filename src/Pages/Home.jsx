@@ -7,51 +7,79 @@ const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
+  const [category, setCategory] = useState("random");
+  const [activeCategory, setActiveCategory] = useState("random"); // New state to track active category
 
   useEffect(() => {
-    // Fetch 12 random movies when the component mounts
-    fetchRandomMovies();
-  }, []);
+    if (category === "random") {
+      fetchRandomMovies();
+    } else if (category === "latestMovies") {
+      fetchLatestMovies();
+    } else if (category === "latestTV") {
+      fetchLatestTVSeries();
+    } else if (category === "trending") {
+      fetchTrendingMovies();
+    }
+  }, [category]);
 
-  // Function to fetch random movies by combining categories and shuffling
   const fetchRandomMovies = async () => {
     const movieList = [];
-    const categories = ["action", "comedy", "drama", "thriller", "romance"]; // Genres to fetch movies from
+    const categories = ["action", "comedy", "drama", "thriller", "romance"];
 
-    // Fetch movies for each category and add them to the list
     for (let category of categories) {
       const response = await fetch(`${API_URL}&s=${category}`);
       const data = await response.json();
       if (data.Search) {
-        movieList.push(...data.Search); // Add movies from this category
+        movieList.push(...data.Search);
       }
     }
 
-    // Shuffle the array of movies and slice the first 12
     const shuffledMovies = shuffleArray(movieList).slice(0, 12);
     setMovies(shuffledMovies);
   };
 
-  // Function to shuffle an array (Fisher-Yates shuffle)
+  const fetchLatestMovies = async () => {
+    const response = await fetch(`${API_URL}&s=movie&y=2024`);
+    const data = await response.json();
+    setMovies(data.Search || []);
+  };
+
+  const fetchLatestTVSeries = async () => {
+    const response = await fetch(`${API_URL}&s=tv&y=2024`);
+    const data = await response.json();
+    setMovies(data.Search || []);
+  };
+
+  const fetchTrendingMovies = async () => {
+    const response = await fetch(`${API_URL}&s=movie&sort=year`);
+    const data = await response.json();
+    setMovies(data.Search || []);
+  };
+
   const shuffleArray = (array) => {
-    let shuffled = array.slice(); // Copy the array to avoid modifying the original
+    let shuffled = array.slice();
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; // Swap elements
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
   };
 
-  // Search movies based on user input
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
-    setMovies(data.Search || []); // Handle case when no movies are found
+    setMovies(data.Search || []);
+  };
+
+  // Set category and active state
+  const handleCategoryClick = (category) => {
+    setCategory(category);
+    setActiveCategory(category); // Set the active category state
   };
 
   return (
     <div className="app">
-      <h1>MovieLand</h1>
+      <h1>Movies Reel</h1>
 
       <div className="search">
         <input
@@ -64,6 +92,28 @@ const Home = () => {
           alt="search"
           onClick={() => searchMovies(searchTerm)}
         />
+      </div>
+
+      <div className="category-buttons">
+        <button
+          onClick={() => handleCategoryClick("trending")}
+          className={activeCategory === "trending" ? "active" : ""}
+        >
+          Trending Movies
+        </button>
+        <button
+          onClick={() => handleCategoryClick("latestMovies")}
+          className={activeCategory === "latestMovies" ? "active" : ""}
+        >
+          Latest Movies
+        </button>
+
+        <button
+          onClick={() => handleCategoryClick("random")}
+          className={activeCategory === "random" ? "active" : ""}
+        >
+          Random Movies
+        </button>
       </div>
 
       {movies?.length > 0 ? (

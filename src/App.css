@@ -14,7 +14,7 @@
 
 body {
   font-family: var(--font-roboto);
-  background-color: #212426;
+  background: #06130e;
 }
 
 .app {
@@ -29,11 +29,7 @@ body {
 h1 {
   font-size: 3rem;
   letter-spacing: 0.9px;
-  background: linear-gradient(
-    90deg,
-    rgba(249, 211, 180, 1) 0%,
-    rgba(249, 211, 180, 0) 100%
-  );
+  background: rgba(205, 184, 153, 255);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -50,9 +46,10 @@ h1 {
 
   padding: 1.5rem 1.75rem;
   border-radius: 3rem;
-  background: #1f2123;
-  -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+  background: #06130e;
+  -webkit-box-shadow: 5px 5px 7px #06130e, -5px -5px 7px #222527;
   box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
+
 }
 
 .search input {
@@ -65,7 +62,7 @@ h1 {
 
   outline: none;
   color: #a1a1a1;
-  background: #1f2123;
+  background: #06130e;
 }
 
 .search img {
@@ -88,6 +85,50 @@ h1 {
   -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
   box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
 } */
+
+/* Add styles for the category buttons */
+.category-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.category-buttons button {
+  background-color: rgb(6, 19, 14);
+  color: rgba(205, 184, 153, 255);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  /* Rounded corners for a smoother floating look */
+  box-shadow: 0 4px 10px rgba(169, 169, 169, 0.4);
+  /* Grey shadow effect */
+  transition: all 0.3s ease-in-out;
+  /* Smooth transition */
+}
+
+.category-buttons button:hover {
+  background-color: rgba(205, 184, 153, 255);
+  color: rgb(6, 19, 14);
+  border: 1px solid rgb(6, 19, 14);
+  transform: translateY(-5px);
+  /* Creates a subtle lift effect when hovered */
+  box-shadow: 0 8px 20px rgba(169, 169, 169, 0.5);
+  /* More pronounced grey shadow on hover */
+}
+
+.category-buttons button:focus {
+  outline: none;
+}
+
+.category-buttons button.active {
+  background-color: rgba(205, 184, 153, 255);
+  color: rgb(6, 19, 14);
+  box-shadow: 0 8px 20px rgba(169, 169, 169, 0.6);
+  transform: translateY(-5px);
+}
 
 .empty {
   width: 100%;
