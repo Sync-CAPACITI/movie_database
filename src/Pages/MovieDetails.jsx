@@ -23,16 +23,6 @@ const MovieDetails = () => {
     setLoading(false);
   };
 
-  // Fetch additional movies (dummy example fetching more movies)
-  const fetchMoreMovies = async () => {
-    setLoading(true);
-    const response = await fetch(`${API_URL}&s=movie&page=${page + 1}`);
-    const data = await response.json();
-    setMoreMovies((prevMovies) => [...prevMovies, ...data.Search]);
-    setPage(page + 1);
-    setLoading(false);
-  };
-
   if (!movieDetails) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#06130e]">
@@ -41,17 +31,11 @@ const MovieDetails = () => {
     );
   }
 
-  // Dummy actor images (Replace with actual images if available)
-  const actorImages = {
-    "Robert Downey Jr.": "https://via.placeholder.com/150",  // Replace with actual image URL
-    "Chris Hemsworth": "https://via.placeholder.com/150",  // Replace with actual image URL
-    "Scarlett Johansson": "https://via.placeholder.com/150",  // Replace with actual image URL
-  };
 
   const actors = movieDetails.Actors.split(', ');
 
-  // Assume that the trailer is available via a YouTube URL or Trailer ID
-  const trailerId = movieDetails.Trailer ? movieDetails.Trailer.split('/').pop() : "dQw4w9WgXcQ"; // Default to a popular YouTube video if not found
+  // a YouTube URL or Trailer ID
+  const trailerId = movieDetails.Trailer ? movieDetails.Trailer.split('/').pop() : "dQw4w9WgXcQ";
 
   return (
     <div className="min-h-screen bg-[#06130e] text-white flex flex-col items-center justify-center p-4">
@@ -97,7 +81,7 @@ const MovieDetails = () => {
                 {actors.map((actor, index) => (
                   <div key={index} className="actor-card">
                     <img
-                      src={actorImages[actor] || "https://via.placeholder.com/150"} // Use the placeholder if no image
+                      // src={actorImages[actor] || "https://via.placeholder.com/150"} // Use the placeholder if no image
                       alt={actor}
                       className="actor-image"
                     />

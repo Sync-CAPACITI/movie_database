@@ -10,9 +10,11 @@ const Home = () => {
   const [movies, setMovies] = useState([]);
   const [category, setCategory] = useState("random");
   const [activeCategory, setActiveCategory] = useState("random");
-  const [activeGenre, setActiveGenre] = useState(null); // Track active genre
-  const [currentPage, setCurrentPage] = useState(1); // Track current page for pagination
+  const [activeGenre, setActiveGenre] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [moviesByCategory, setMoviesByCategory] = useState({});
+
 
   useEffect(() => {
     if (category === "random") {
@@ -100,18 +102,18 @@ const Home = () => {
   const handleCategoryClick = (category) => {
     setCategory(category);
     setActiveCategory(category);
-    setActiveGenre(null); // Reset the genre when category changes
-    setCurrentPage(1); // Reset to the first page
+    setActiveGenre(null);
+    setCurrentPage(1);
   };
 
   const handleGenreClick = (genre) => {
-    setActiveGenre(genre); // Set the active genre
-    fetchMoviesByGenre(category, genre); // Fetch movies based on selected genre
-    setCurrentPage(1); // Reset to the first page
+    setActiveGenre(genre);
+    fetchMoviesByGenre(category, genre);
+    setCurrentPage(1);
   };
 
   const handleShowMore = () => {
-    setCurrentPage((prevPage) => prevPage + 1); // Increment page number
+    setCurrentPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -205,6 +207,24 @@ const Home = () => {
           <h2>No movies found</h2>
         </div>
       )}
+
+      <div className="movies-container">
+        {Object.keys(moviesByCategory).map((category) => {
+          const movies = moviesByCategory[category];
+          if (movies.length === 0) return null;
+
+          return (
+            <div key={category} className="category-group">
+              <h2 className="category-label">{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
+              <div className="movie-list">
+                {movies.map((movie) => (
+                  <MovieCard key={movie.imdbID} movie={movie} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {/* Floating Show More Button */}
       <div className="show-more-btn">

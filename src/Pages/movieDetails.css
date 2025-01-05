@@ -158,26 +158,17 @@ body {
     display: block;
 }
 
-/* Layout for Image and Text - Position Image to the Left and Text to the Right */
 .hero-container {
     display: flex;
     align-items: flex-start;
-    /* Align items to the top */
-    justify-content: flex-start;
-    /* Position image and text from the left */
     gap: 3rem;
-    /* Space between image and text (3rem) */
     flex-direction: row;
-    /* Horizontal layout for large screens */
     flex-wrap: wrap;
-    /* Allow wrapping on smaller screens */
 }
 
 .hero-image {
     width: 375px;
-    /* Increased width by 25% */
     height: 562px;
-    /* Increased height by 25% */
     object-fit: cover;
     border-radius: 8px;
 }
@@ -236,7 +227,6 @@ iframe {
     margin-bottom: 1rem;
 }
 
-/* Flexbox layout for cast */
 .flex {
     display: flex;
     flex-wrap: wrap;
@@ -252,40 +242,33 @@ iframe {
 }
 
 
-/* Custom Media Queries for Responsiveness */
+/*Responsiveness */
 @media (max-width: 768px) {
     .hero-container {
         flex-direction: column;
-        /* Stack image and text on smaller screens */
         align-items: center;
     }
 
     .hero-image {
         width: 100%;
-        /* Make image full-width on smaller screens */
         height: auto;
-        /* Maintain aspect ratio */
     }
 
     .hero-title {
         font-size: 2rem;
-        /* Adjust title size */
     }
 
     .hero-description {
         font-size: 1rem;
-        /* Adjust description font size */
     }
 }
 
 @media (max-width: 480px) {
     .hero-title {
         font-size: 1.75rem;
-        /* Adjust title size for very small screens */
     }
 
     .hero-description {
         font-size: 0.875rem;
-        /* Adjust description font size for very small screens */
     }
 }

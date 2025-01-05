@@ -71,22 +71,6 @@ h1 {
   cursor: pointer;
 }
 
-/* .search button {
-  padding: 20px 40px;
-  border-radius: 0.5rem;
-  margin-left: 15px;
-  color: #a1a1a1;
-  font-family: var(--font-raleway);
-  font-weight: 900;
-  letter-spacing: 0.75px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  background: #1f2123;
-  -webkit-box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
-  box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
-} */
-
-/* Home.css */
 
 /* Style for category buttons */
 .category-buttons,
@@ -106,11 +90,8 @@ h1 {
   font-size: 16px;
   cursor: pointer;
   border-radius: 8px;
-  /* Rounded corners for a smoother floating look */
   box-shadow: 0 4px 10px rgba(169, 169, 169, 0.4);
-  /* Grey shadow effect */
   transition: all 0.3s ease-in-out;
-  /* Smooth transition */
 }
 
 .category-buttons button:hover,
@@ -118,10 +99,7 @@ h1 {
   background-color: rgba(205, 184, 153, 255);
   color: rgb(6, 19, 14);
   border: 1px solid rgb(6, 19, 14);
-  transform: translateY(-5px);
-  /* Creates a subtle lift effect when hovered */
   box-shadow: 0 8px 20px rgba(169, 169, 169, 0.5);
-  /* More pronounced grey shadow on hover */
 }
 
 .category-buttons button:focus,
@@ -133,20 +111,14 @@ h1 {
 .category-buttons button.active,
 .genre-buttons button.active {
   background-color: rgba(205, 184, 153, 255);
-  /* Active button background */
   color: rgb(6, 19, 14);
-  /* Active button text color */
   box-shadow: 0 8px 20px rgba(169, 169, 169, 0.6);
-  /* Stronger grey shadow for active state */
-  transform: translateY(-5px);
-  /* Slight lift effect */
 }
 
 
 .empty {
   width: 100%;
   margin-top: 3rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -169,15 +141,13 @@ h1 {
 }
 
 .movie {
-  width: 210px;
-  height: 360px;
+  width: 180px;
+  height: 330px;
   margin: 1.5rem;
-
   position: relative;
   border-radius: 12px;
   overflow: hidden;
   border: none;
-
   transition: all 2.5s cubic-bezier(0.175, 0.885, 0, 1);
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
