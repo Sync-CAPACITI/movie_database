@@ -86,15 +86,19 @@ h1 {
   box-shadow: 5px 5px 7px #1c1d1f, -5px -5px 7px #222527;
 } */
 
-/* Add styles for the category buttons */
-.category-buttons {
+/* Home.css */
+
+/* Style for category buttons */
+.category-buttons,
+.genre-buttons {
   display: flex;
   gap: 10px;
   margin-top: 20px;
   justify-content: center;
 }
 
-.category-buttons button {
+.category-buttons button,
+.genre-buttons button {
   background-color: rgb(6, 19, 14);
   color: rgba(205, 184, 153, 255);
   border: none;
@@ -109,7 +113,8 @@ h1 {
   /* Smooth transition */
 }
 
-.category-buttons button:hover {
+.category-buttons button:hover,
+.genre-buttons button:hover {
   background-color: rgba(205, 184, 153, 255);
   color: rgb(6, 19, 14);
   border: 1px solid rgb(6, 19, 14);
@@ -119,16 +124,24 @@ h1 {
   /* More pronounced grey shadow on hover */
 }
 
-.category-buttons button:focus {
+.category-buttons button:focus,
+.genre-buttons button:focus {
   outline: none;
 }
 
-.category-buttons button.active {
+/* Add styles for the active (focused) button */
+.category-buttons button.active,
+.genre-buttons button.active {
   background-color: rgba(205, 184, 153, 255);
+  /* Active button background */
   color: rgb(6, 19, 14);
+  /* Active button text color */
   box-shadow: 0 8px 20px rgba(169, 169, 169, 0.6);
+  /* Stronger grey shadow for active state */
   transform: translateY(-5px);
+  /* Slight lift effect */
 }
+
 
 .empty {
   width: 100%;
@@ -156,8 +169,8 @@ h1 {
 }
 
 .movie {
-  width: 310px;
-  height: 460px;
+  width: 210px;
+  height: 360px;
   margin: 1.5rem;
 
   position: relative;
@@ -165,7 +178,7 @@ h1 {
   overflow: hidden;
   border: none;
 
-  transition: all 3s cubic-bezier(0.175, 0.885, 0, 1);
+  transition: all 2.5s cubic-bezier(0.175, 0.885, 0, 1);
   box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
 }
 
@@ -179,7 +192,7 @@ h1 {
 }
 
 .movie:hover {
-  box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 30px 18px -8px rgba(8, 8, 8, 0.778);
   transform: scale(1.05, 1.05);
 }
 
@@ -195,8 +208,8 @@ h1 {
 
 .movie div:nth-of-type(3) {
   z-index: 2;
-  background-color: #343739;
-  padding: 16px 24px 24px 24px;
+  background-color: rgb(6, 19, 14);
+  padding: 14px 22px 22px 22px;
 
   position: absolute;
   bottom: 0;
@@ -243,7 +256,7 @@ h1 {
 }
 
 .movie-details p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 20px;
 }
 

@@ -8,7 +8,7 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, setMovies] = useState([]);
   const [category, setCategory] = useState("random");
-  const [activeCategory, setActiveCategory] = useState("random"); // New state to track active category
+  const [activeCategory, setActiveCategory] = useState("random");
 
   useEffect(() => {
     if (category === "random") {
@@ -19,6 +19,8 @@ const Home = () => {
       fetchLatestTVSeries();
     } else if (category === "trending") {
       fetchTrendingMovies();
+    } else {
+      fetchMoviesByGenre(category); // Fetch movies for the selected genre
     }
   }, [category]);
 
@@ -36,6 +38,12 @@ const Home = () => {
 
     const shuffledMovies = shuffleArray(movieList).slice(0, 12);
     setMovies(shuffledMovies);
+  };
+
+  const fetchMoviesByGenre = async (genre) => {
+    const response = await fetch(`${API_URL}&s=${genre}`);
+    const data = await response.json();
+    setMovies(data.Search || []);
   };
 
   const fetchLatestMovies = async () => {
@@ -107,12 +115,50 @@ const Home = () => {
         >
           Latest Movies
         </button>
-
+        <button
+          onClick={() => handleCategoryClick("latestTV")}
+          className={activeCategory === "latestTV" ? "active" : ""}
+        >
+          Latest TV Series
+        </button>
         <button
           onClick={() => handleCategoryClick("random")}
           className={activeCategory === "random" ? "active" : ""}
         >
           Random Movies
+        </button>
+      </div>
+
+      <div className="genre-buttons">
+        <button
+          onClick={() => handleCategoryClick("action")}
+          className={activeCategory === "action" ? "active" : ""}
+        >
+          Action
+        </button>
+        <button
+          onClick={() => handleCategoryClick("comedy")}
+          className={activeCategory === "comedy" ? "active" : ""}
+        >
+          Comedy
+        </button>
+        <button
+          onClick={() => handleCategoryClick("drama")}
+          className={activeCategory === "drama" ? "active" : ""}
+        >
+          Drama
+        </button>
+        <button
+          onClick={() => handleCategoryClick("thriller")}
+          className={activeCategory === "thriller" ? "active" : ""}
+        >
+          Thriller
+        </button>
+        <button
+          onClick={() => handleCategoryClick("romance")}
+          className={activeCategory === "romance" ? "active" : ""}
+        >
+          Romance
         </button>
       </div>
 
