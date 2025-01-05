@@ -26,6 +26,15 @@ const MovieDetails = () => {
     );
   }
 
+  // Dummy actor images (Replace with actual images if available)
+  const actorImages = {
+    "Robert Downey Jr.": "https://via.placeholder.com/150",  // Replace with actual image URL
+    "Chris Hemsworth": "https://via.placeholder.com/150",  // Replace with actual image URL
+    "Scarlett Johansson": "https://via.placeholder.com/150",  // Replace with actual image URL
+  };
+
+  const actors = movieDetails.Actors.split(', ');
+
   return (
     <div className="min-h-screen bg-[#06130e] text-white flex flex-col items-center justify-center p-4">
       <div className="max-w-4xl w-full bg-white text-black shadow-lg rounded-lg overflow-hidden">
@@ -60,6 +69,19 @@ const MovieDetails = () => {
               <div>
                 <strong className="block text-gray-400">IMDB Rating:</strong>
                 <span className="text-gray-300">{movieDetails.imdbRating}/10</span>
+              </div>
+            </div>
+
+            {/* Cast Section */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-semibold text-[#06130e]">Cast</h3>
+              <div className="flex flex-wrap gap-6 mt-4">
+                {actors.map((actor, index) => (
+                  <div key={index} className="actor-card">
+
+                    <div className="actor-name text-center">{actor}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
