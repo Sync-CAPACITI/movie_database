@@ -1,0 +1,36 @@
+.show-more-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #2d3748;
+    /* Dark background for disabled state */
+}
+
+.show-more-btn button {
+    color: rgb(6, 19, 14);
+    /* Dark text color */
+    background-color: rgba(205, 184, 153, 255);
+    /* Light golden background */
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    /* Rounded corners for smooth, modern look */
+    box-shadow: 0 4px 10px rgba(169, 169, 169, 0.4);
+    /* Soft grey shadow for a floating effect */
+    transition: all 0.3s ease-in-out;
+    /* Smooth transition for hover and other states */
+}
+
+.show-more-btn button:hover {
+    background-color: rgba(205, 184, 153, 255);
+    /* Keep same background color on hover */
+    color: rgb(6, 19, 14);
+    /* Dark text color on hover */
+    border: 1px solid rgb(6, 19, 14);
+    /* Border on hover for emphasis */
+    transform: translateY(-5px);
+    /* Subtle lift effect on hover */
+    box-shadow: 0 8px 20px rgba(169, 169, 169, 0.5);
+    /* Stronger shadow for hover */
+}
