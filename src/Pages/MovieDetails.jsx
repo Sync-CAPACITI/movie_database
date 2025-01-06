@@ -90,9 +90,10 @@ const MovieDetails = () => {
                 ))}
               </div>
             </div>
-
-            {/* YouTube Trailer Section */}
-            <div className="trailer-container mt-8">
+          </div>
+        </div>
+        {/* YouTube Trailer Section */}
+        <div className="trailer-container mt-8">
               <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
               <iframe
                 width="100%"
@@ -104,8 +105,6 @@ const MovieDetails = () => {
                 allowFullScreen
               ></iframe>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   );
