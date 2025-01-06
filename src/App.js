@@ -8,7 +8,6 @@ import "./App.css";
 const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
 
 const App = () => {
-
   return (
     <Router>
         <Routes>
