@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import './movieDetails.css';
 
-const API_URL = "http://www.omdbapi.com?apikey=b6003d8a";
+const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
 
 const MovieDetails = () => {
   const { id } = useParams();
