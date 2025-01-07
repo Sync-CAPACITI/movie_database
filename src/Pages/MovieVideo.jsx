@@ -3,31 +3,22 @@ import React, { useState, useEffect } from "react";
 const MovieVideo = () => {
     const [selectedResolution, setSelectedResolution] = useState("720p");
 
-    const handleResolutionChange = (e) => {
-        setSelectedResolution(e.target.value);
-    };
+    const resolutions = ["480p", "720p", "1080p", "4K"];
   
     return (
         <div className="app">
             <h1>Watch Movie</h1>
             <div style={{ marginBottom: "1rem" }}>
                 
-                {/* <select
-                    id="resolution"
-                    value={selectedResolution}
-                    onChange={handleResolutionChange}
-                >
-                    <option value="480p">480p</option>
-                    <option value="720p">720p</option>
-                    <option value="1080p">1080p</option>
-                    <option value="4K">4K</option>
-                </select> */}
                 <div className="category-buttons">
-                <label htmlFor="resolution">RESOLUTION: </label>
-                    <button>480p</button>
-                    <button>720p</button>
-                    <button>1080p</button>
-                    <button>4K</button>
+                    <label htmlFor="resolution">RESOLUTION: </label>
+                    {resolutions.map((res) => (
+                        <button
+                            key={res}
+                            onClick={() => setSelectedResolution(res)}>
+                            {res}
+                        </button>
+                    ))}
                 </div>
             </div>
             <video
