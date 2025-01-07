@@ -37,7 +37,7 @@ const MovieVideo = () => {
             >
                 Your browser does not support the video tag.
             </video>
-            <p>
+            <p className="search">
                 <strong>Selected Resolution:</strong> {selectedResolution}
             </p>
         </div>
