@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MovieDetails from './Pages/MovieDetails'
 import Home from "./Pages/Home";
+import MovieVideo from "./Pages/MovieVideo";
 
 import "./App.css";
 
@@ -13,6 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/MovieVideo.jsx" element={<MovieVideo />} />
         </Routes>
     </Router>
   );
