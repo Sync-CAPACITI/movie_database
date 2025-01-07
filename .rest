@@ -1,0 +1,7 @@
+
+
+
+
+### Fetch the trailer video
+GET https://api.themoviedb.org/3/search/movie?query=Jack+Reacher 
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZTI4MTFjM2VhNTkyZTNiYmRlMjFkOWU3NDQzZWI2YSIsIm5iZiI6MTczMzMwNDE3My41Mywic3ViIjoiNjc1MDFmNmQ4MDEyZjkzZGJjNjk5ZGI2Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.cyghGmCxWBWNonXPoEdkeuo5v1XbinlIYv4IDelsShY
