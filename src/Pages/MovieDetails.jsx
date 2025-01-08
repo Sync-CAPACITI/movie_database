@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './movieDetails.css';
 
 const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
@@ -7,6 +7,13 @@ const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
 const MovieDetails = () => {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      fetchMovieDetails(id);
+  }, [id]);
+
   const [moreMovies, setMoreMovies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -36,6 +43,11 @@ const MovieDetails = () => {
 
   // a YouTube URL or Trailer ID
   const trailerId = movieDetails.Trailer ? movieDetails.Trailer.split('/').pop() : "dQw4w9WgXcQ";
+
+  //export data to MovieVideo.jsx
+  const handleWatchMovie = () => {
+    navigate(`/MovieVideo.jsx`, { state: { movieDetails } });
+  };
 
   return (
     <div className="min-h-screen bg-[#06130e] text-white flex flex-col items-center justify-center p-4">
@@ -90,6 +102,11 @@ const MovieDetails = () => {
                 ))}
               </div>
             </div>
+            <div className="show-more-btn">
+              <button onClick={handleWatchMovie}>Watch Movie</button>
+            </div>
+            
+
           </div>
         </div>
         {/* YouTube Trailer Section */}

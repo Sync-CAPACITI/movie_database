@@ -1,20 +1,24 @@
 import React, { useState, useRef } from "react";
-
+import { useLocation } from "react-router-dom";
 
 const MovieVideo = () => {
+    const location = useLocation();
+    const { movieDetails } = location.state || {};
     const [selectedResolution, setSelectedResolution] = useState("720p");
     const [isPlaying, setIsPlaying] = useState(false);
     const videoRef = useRef(null);
+    const movieT = movieDetails.Title.replaceAll(" ", "+");
+    console.log(movieT);
 
     const resolutions = ["480p", "720p", "1080p", "4K"];
-    const videoUrl = "/5 CSS Tips & Tricks for better Responsive Web Design.mp4";
+    const videoUrl = "https://ww4.123moviesfree.net/movie/the-original-kings-of-comedy-20378/";
 
     const handlePlayPause = () => {
         if (videoRef.current) {
             if (isPlaying) {
                 videoRef.current.pause();
             } else {
-                videoRef.current.play();
+                window.location.href = `https://ww4.123moviesfree.net/search/?q=${movieT}`;
             }
             setIsPlaying(!isPlaying);
         }
@@ -23,6 +27,11 @@ const MovieVideo = () => {
     return (
         <div className="app">
             <h1>Watch Movie</h1>
+            {movieDetails && (
+                <>
+                    <h2 className="hero-title">{movieDetails.Title}</h2>
+                </>
+            )}
             <div style={{ marginBottom: "1rem" }}>
                 
                 <div className="category-buttons">
@@ -40,10 +49,13 @@ const MovieVideo = () => {
                 <video
                     ref={videoRef}
                     width="100%"
-                    // height={selectedResolution}
+                    height="500px"
                     controls
-                    style={{ backgroundColor: "#000" }}
+                    style={{ objectFit: "cover", backgroundColor: "#000" }}
                     src={videoUrl}
+                    poster={movieDetails?.Poster || ""}
+                    
+                    
                 >
                 Your browser does not support the video tag.
                 </video>
@@ -74,6 +86,7 @@ const MovieVideo = () => {
             <p className="search">
                 <strong>Selected Resolution:</strong> {selectedResolution}
             </p>
+
         </div>
     );
 }
