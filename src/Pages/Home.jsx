@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import MovieCard from "../MovieCard";
 import SearchIcon from "../search.svg";
 import "./showMore.css";
+import Spinner from 'react-bootstrap/Spinner';
 
 const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
+// const TMDB_API_URL = "https://api.themoviedb.org/3/movie"; // TMDb base URL
+// const TMDB_API_KEY = "ae2811c3ea592e3bbde21d9e7443eb6a"; // Replace with your TMDb API key
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -196,17 +199,22 @@ const Home = () => {
         </div>
       )}
 
-      {movies?.length > 0 ? (
+      {movies?.length > 0 ? ( // if the movies are retrived from the API 
         <div className="container">
-          {movies.map((movie) => (
-            <MovieCard key={movie.imdbID} movie={movie} />
-          ))}
+          {
+            movies.map((movie) => (
+              <MovieCard key={movie.imdbID} movie={movie} />
+            ))
+          }
         </div>
-      ) : (
-        <div className="empty">
-          <h2>No movies found</h2>
-        </div>
-      )}
+      ) :
+
+        (
+          <div className="empty">
+            <h2>No movies found</h2>
+          </div>
+        )
+      }
 
       <div className="movies-container">
         {Object.keys(moviesByCategory).map((category) => {
@@ -227,15 +235,18 @@ const Home = () => {
       </div>
 
       {/* Floating Show More Button */}
-      <div className="show-more-btn">
-        <button
-          onClick={handleShowMore}
-          disabled={loading}
-          className={loading ? "loading" : ""}
-        >
-          {loading ? "Loading..." : "Show More"}
-        </button>
-      </div>
+      {/* Show the "Show More" button only if there are movies */}
+      {movies?.length > 0 && (
+        <div className="show-more-btn">
+          <button
+            onClick={handleShowMore}
+            disabled={loading}
+            className={loading ? "loading" : ""}
+          >
+            {loading ? "Loading..." : "Show More"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };
