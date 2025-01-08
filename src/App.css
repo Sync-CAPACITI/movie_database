@@ -119,9 +119,13 @@ h1 {
 .empty {
   width: 100%;
   margin-top: 3rem;
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-repeat: no-repeat;
+  background-position-x: 50%;
+  background-position-y: center; /* Center vertically */
+  text-align: center; /* For the text alignment */ 
 }
 
 .empty h2 {

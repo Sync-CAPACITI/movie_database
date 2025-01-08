@@ -211,6 +211,7 @@ const Home = () => {
 
         (
           <div className="empty">
+            <img src="/film-reel.png" alt="No movies found" />
             <h2>No movies found</h2>
           </div>
         )
