@@ -1,0 +1,75 @@
+/* Set the background color and style for the entire navbar */
+/* Responsiveness (Media Queries) */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+  .navbar ul {
+    flex-direction: column; /* Stack items vertically */
+  }
+  .navbar li {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.navbar {
+    background-color: #333 !important; /* Dark background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+
+  .nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+
+  .navbar a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+  }
+
+  .nav li.active {
+    background-color: #4d4646;
+  }
+  
+  /* Style for the brand */
+  .navbar-brand {
+    color: #f8f9fa !important; /* Light color for brand */
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  /* Style for navigation links */
+  .nav-link {
+    color: #f8f9fa !important; /* Light color for links */
+    font-size: 1.1rem;
+    padding: 10px 15px;
+  }
+  
+  /* Add hover effect for nav links */
+  .nav-link:hover {
+    color: #e0e0e0 !important; /* Slightly lighter on hover */
+    text-decoration: underline;
+  }
+  
+  /* Optional: Add space between nav links */
+  .navbar-nav {
+    margin-left: auto; /* Align the nav links to the right */
+  }
+  
