@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import './movieDetails.css';
 
 const OMDB_API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
@@ -9,6 +9,12 @@ const TMDB_API_KEY = "ae2811c3ea592e3bbde21d9e7443eb6a"; // Replace with your TM
 const MovieDetails = () => {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      fetchMovieDetails(id);
+  }, [id]);
+
   const [trailerId, setTrailerId] = useState(null); // State for storing trailer ID
   const [loading, setLoading] = useState(false);
 
@@ -35,9 +41,12 @@ const MovieDetails = () => {
       if (data.results.length > 0) {
         // Get the first trailer from the results
         setTrailerId(data.results[0].key);
+      }else {
+        setTrailerId(null);
       }
     } catch (error) {
       console.error("Error fetching trailer:", error);
+      setTrailerId(null);
     }
     setLoading(false);
   };
@@ -52,6 +61,11 @@ const MovieDetails = () => {
 
   // Actors list
   const actors = movieDetails.Actors.split(', ');
+
+  //export data to MovieVideo.jsx
+  const handleWatchMovie = () => {
+    navigate(`/MovieVideo.jsx`, { state: { movieDetails } });
+  };
 
   return (
     <div className="min-h-screen bg-[#06130e] text-white flex flex-col items-center justify-center p-4">
@@ -102,11 +116,17 @@ const MovieDetails = () => {
                 ))}
               </div>
             </div>
+            <div className="show-more-btn">
+              <button onClick={handleWatchMovie}>Watch Movie</button>
+            </div>
+            
+
           </div>
         </div>
 
+        
         {/* YouTube Trailer Section */}
-        {trailerId && (
+        {trailerId ? (
           <div className="trailer-container mt-8">
             <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
             <iframe
@@ -119,6 +139,20 @@ const MovieDetails = () => {
               allowFullScreen
             ></iframe>
           </div>
+        ) : (
+           // If no trailer ID is available, show a Play button
+           <div className="trailer-container mt-8">
+            <h3 className="text-2xl font-semibold text-[#06130e] search">Watch Trailer</h3>
+            <div  className="show-more-btn">
+              <button
+                onClick={() => {
+                  window.location.href = `https://www.youtube.com/results?search_query=${movieDetails.Title.replaceAll(" ", "+")}+trailer`;
+                }}
+              >
+                Play on YouTube
+              </button>
+            </div>
+          </div>  
         )}
       </div>
     </div>
