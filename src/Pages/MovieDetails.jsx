@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import './movieDetails.css';
 
-const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
+const OMDB_API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
+const TMDB_API_URL = "https://api.themoviedb.org/3/movie"; // TMDb base URL
+const TMDB_API_KEY = "ae2811c3ea592e3bbde21d9e7443eb6a"; // Replace with your TMDb API key
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -14,23 +16,40 @@ const MovieDetails = () => {
       fetchMovieDetails(id);
   }, [id]);
 
-  const [moreMovies, setMoreMovies] = useState([]);
-  const [page, setPage] = useState(1);
+  const [trailerId, setTrailerId] = useState(null); // State for storing trailer ID
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchMovieDetails(id);
+    fetchMovieTrailer(id); // Fetch trailer after getting movie details
   }, [id]);
 
+  // Fetch movie details from OMDb API
   const fetchMovieDetails = async (id) => {
     setLoading(true);
-    const response = await fetch(`${API_URL}&i=${id}`);
+    const response = await fetch(`${OMDB_API_URL}&i=${id}`);
     const data = await response.json();
     setMovieDetails(data);
     setLoading(false);
   };
 
-  if (!movieDetails) {
+  // Fetch movie trailer from TMDb API
+  const fetchMovieTrailer = async (id) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${TMDB_API_URL}/${id}/videos?api_key=${TMDB_API_KEY}&language=en`);
+      const data = await response.json();
+      if (data.results.length > 0) {
+        // Get the first trailer from the results
+        setTrailerId(data.results[0].key);
+      }
+    } catch (error) {
+      console.error("Error fetching trailer:", error);
+    }
+    setLoading(false);
+  };
+
+  if (loading || !movieDetails) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#06130e]">
         <div className="text-lg font-medium text-gray-300">Loading...</div>
@@ -38,11 +57,8 @@ const MovieDetails = () => {
     );
   }
 
-
+  // Actors list
   const actors = movieDetails.Actors.split(', ');
-
-  // a YouTube URL or Trailer ID
-  const trailerId = movieDetails.Trailer ? movieDetails.Trailer.split('/').pop() : "dQw4w9WgXcQ";
 
   //export data to MovieVideo.jsx
   const handleWatchMovie = () => {
@@ -60,10 +76,7 @@ const MovieDetails = () => {
             className="hero-image"
           />
           <div className="hero-text">
-            {/* Title */}
             <h2 className="hero-title">{movieDetails.Title}</h2>
-
-            {/* Plot */}
             <p className="hero-description">{movieDetails.Plot}</p>
 
             {/* Additional Details */}
@@ -93,7 +106,6 @@ const MovieDetails = () => {
                 {actors.map((actor, index) => (
                   <div key={index} className="actor-card">
                     <img
-                      // src={actorImages[actor] || "https://via.placeholder.com/150"} // Use the placeholder if no image
                       alt={actor}
                       className="actor-image"
                     />
@@ -109,19 +121,22 @@ const MovieDetails = () => {
 
           </div>
         </div>
+
         {/* YouTube Trailer Section */}
-        <div className="trailer-container mt-8">
-              <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
-              <iframe
-                width="100%"
-                height="315"
-                src={`https://www.youtube.com/embed/${trailerId}`}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            </div>
+        {trailerId && (
+          <div className="trailer-container mt-8">
+            <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
+            <iframe
+              width="100%"
+              height="315"
+              src={`https://www.youtube.com/embed/${trailerId}`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        )}
       </div>
     </div>
   );
