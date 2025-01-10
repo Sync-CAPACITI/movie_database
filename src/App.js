@@ -9,19 +9,17 @@ import "./App.css";
 const API_URL = "https://www.omdbapi.com?apikey=b6003d8a";
 
 const App = () => {
-  return (
-<div>      
-    <NavBarMenu />
-
+  return (  
     <Router>
+          <NavBarMenu /> 
+          <div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<MovieDetails />} />
           <Route path="/watch-history" component={WatchHistory} />
         </Routes>
+        </div>
     </Router>
-
-    </div>
   );
 };
 
