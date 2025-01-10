@@ -9,7 +9,6 @@ const TMDB_API_KEY = "ae2811c3ea592e3bbde21d9e7443eb6a"; // Replace with your TM
 const MovieDetails = () => {
   const { id } = useParams();
   const [movieDetails, setMovieDetails] = useState(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,9 +41,12 @@ const MovieDetails = () => {
       if (data.results.length > 0) {
         // Get the first trailer from the results
         setTrailerId(data.results[0].key);
+      }else {
+        setTrailerId(null);
       }
     } catch (error) {
       console.error("Error fetching trailer:", error);
+      setTrailerId(null);
     }
     setLoading(false);
   };
@@ -122,8 +124,9 @@ const MovieDetails = () => {
           </div>
         </div>
 
+        
         {/* YouTube Trailer Section */}
-        {trailerId && (
+        {trailerId ? (
           <div className="trailer-container mt-8">
             <h3 className="text-2xl font-semibold text-[#06130e]">Watch Trailer</h3>
             <iframe
@@ -136,6 +139,20 @@ const MovieDetails = () => {
               allowFullScreen
             ></iframe>
           </div>
+        ) : (
+           // If no trailer ID is available, show a Play button
+           <div className="trailer-container mt-8">
+            <h3 className="text-2xl font-semibold text-[#06130e] search">Watch Trailer</h3>
+            <div  className="show-more-btn">
+              <button
+                onClick={() => {
+                  window.location.href = `https://www.youtube.com/results?search_query=${movieDetails.Title.replaceAll(" ", "+")}+trailer`;
+                }}
+              >
+                Play on YouTube
+              </button>
+            </div>
+          </div>  
         )}
       </div>
     </div>
